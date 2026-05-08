@@ -196,6 +196,7 @@ function displayProducts(products) {
 
             <div class="shop-actions">
               <button onclick='addToCart(${JSON.stringify(p)})'>🛒</button>
+              <button onclick='buyNow(${JSON.stringify(p)})'>🛍️</button>
               <button onclick='addToWishlist(${JSON.stringify(p)}, this)'>❤️</button>
             </div>
 
@@ -298,4 +299,23 @@ function showToast(message) {
   setTimeout(() => {
     toast.classList.remove("show");
   }, 2000);
+}
+function buyNow(product) {
+
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  const exists = cart.find(item => item.id === product.id);
+
+  if (!exists) {
+
+    product.quantity = 1;
+
+    product.buyNowTemp = true;
+
+    cart.push(product);
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  window.location.href = "cart.html";
 }

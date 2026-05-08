@@ -54,6 +54,13 @@ function displayProducts(products) {
                   data-id="${product.id}">
                   <span><i class="ion-ios-heart"></i></span>
                 </a>
+                <a href="javascript:void(0)"
+                  onclick='buyNow(${JSON.stringify(product)})'
+                  class="buy-now buy-now-icon d-flex justify-content-center align-items-center mx-1">
+
+                    <span>🛍️</span>
+
+                </a>
               </div>
             </div>
 
@@ -89,7 +96,25 @@ function addToCart(product) {
   // ✅ animate cart
   animateCart();
 }
-  
+  function buyNow(product) {
+
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  const exists = cart.find(item => item.id === product.id);
+
+  if (!exists) {
+
+    product.quantity = 1;
+
+    product.buyNowTemp = true;
+
+    cart.push(product);
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  window.location.href = "cart.html";
+}
 
 function addToWishlist(product, element) {
   let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
@@ -108,6 +133,7 @@ function addToWishlist(product, element) {
     element.classList.add("active");
     updateWishlistCount();
   }
+  
 
 } 
 function updateCartCount() {

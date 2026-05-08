@@ -10335,7 +10335,10 @@ padding-bottom: 80px; }
   background: red !important;
 }
 
-
+.buy-now-icon {
+    background: #ff8c42     !important;
+    color: white;
+}
 
 
 

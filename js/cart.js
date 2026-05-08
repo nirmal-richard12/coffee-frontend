@@ -159,3 +159,11 @@ function updateWishlistCount() {
     el.innerText = wishlist.length;
   }
 }
+window.addEventListener("beforeunload", () => {
+
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  cart = cart.filter(item => !item.buyNowTemp);
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+});

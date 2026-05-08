@@ -1,11 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
- renderWishlist();
+
+  renderWishlist();
 
   updateCartCount();
 
   updateWishlistCount();
+
 });
 
+// 🔥 RENDER WISHLIST
 function renderWishlist() {
 
   let wishlist =
@@ -21,7 +24,9 @@ function renderWishlist() {
 
     container.innerHTML = `
       <div class="empty-wishlist">
-        <img src="images/coffee-empty.png" class="empty-img">
+
+        <img src="images/coffee-empty.png"
+          class="empty-img">
 
         <h2>Your Coffee Wishlist is Empty ☕</h2>
 
@@ -33,6 +38,7 @@ function renderWishlist() {
         <a href="shop.html" class="browse-btn">
           Explore Coffee
         </a>
+
       </div>
     `;
 
@@ -56,8 +62,7 @@ function renderWishlist() {
 
     <h3>${item.name}</h3>
 
-    
- <p class="premium-wishlist-price">
+    <p class="premium-wishlist-price">
       ₹${item.price}
     </p>
 
@@ -82,6 +87,7 @@ function renderWishlist() {
   });
 }
 
+// ❌ REMOVE FROM WISHLIST
 function removeWishlist(index) {
 
   let wishlist =
@@ -95,26 +101,31 @@ function removeWishlist(index) {
   );
 
   renderWishlist();
+
+  updateWishlistCount();
 }
 
+// 🛒 ADD TO CART
 function addToCart(product) {
 
   let cart =
     JSON.parse(localStorage.getItem("cart")) || [];
 
-  cart.push(product);
+  // CHECK EXISTING PRODUCT
+  let existingProduct =
+    cart.find(item => item.id === product.id);
 
-  localStorage.setItem(
-    "cart",
-    JSON.stringify(cart)
-  );
+  if (existingProduct) {
 
-  function addToCart(product) {
+    existingProduct.quantity =
+      (existingProduct.quantity || 1) + 1;
 
-  let cart =
-    JSON.parse(localStorage.getItem("cart")) || [];
+  } else {
 
-  cart.push(product);
+    product.quantity = 1;
+
+    cart.push(product);
+  }
 
   localStorage.setItem(
     "cart",
@@ -125,7 +136,8 @@ function addToCart(product) {
 
   showToast(`${product.name} added to cart ☕`);
 }
-}
+
+// 🔔 TOAST MESSAGE
 function showToast(message) {
 
   const toast = document.createElement("div");
@@ -153,19 +165,28 @@ function showToast(message) {
 
   }, 2500);
 }
+
+// 🛒 CART COUNT
 function updateCartCount() {
 
   const cart =
     JSON.parse(localStorage.getItem("cart")) || [];
 
+  let count = 0;
+
+  cart.forEach(item => {
+    count += item.quantity || 1;
+  });
+
   const cartCount =
     document.getElementById("cart-count");
 
-  if(cartCount){
-    cartCount.innerText = cart.length;
+  if (cartCount) {
+    cartCount.innerText = count;
   }
 }
 
+// ❤️ WISHLIST COUNT
 function updateWishlistCount() {
 
   const wishlist =
@@ -174,7 +195,7 @@ function updateWishlistCount() {
   const wishlistCount =
     document.getElementById("wishlist-count");
 
-  if(wishlistCount){
+  if (wishlistCount) {
     wishlistCount.innerText = wishlist.length;
   }
 }
