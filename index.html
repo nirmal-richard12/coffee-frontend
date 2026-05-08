@@ -363,7 +363,7 @@ startCoffeeTimer(5,  {d: 'd1', h: 'h1', m: 'm1', s: 's1'}); // Slide 1: Mocha
 startCoffeeTimer(8,  {d: 'd3', h: 'h3', m: 'm3', s: 's3'}); // Slide 3: Cold Brew
 </script>
 <script>
-  const socket = io("http://localhost:5000");
+  const socket = io("https://coffee-backend-wkng.onrender.com");
   socket.on("new_product_alert", (data) => {
     // This uses your existing toast function from custom.js
     if (typeof showToast === "function") {

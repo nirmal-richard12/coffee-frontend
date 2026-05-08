@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const categoryFromHome = params.get("category");
 
   // 🔥 FETCH PRODUCTS
-  fetch("http://localhost:5000/api/products")
+  fetch("https://coffee-backend-wkng.onrender.com/api/products")
     .then(res => res.json())
     .then(data => {
       allProducts = data;
